@@ -2,11 +2,10 @@ import com.sun.xml.internal.bind.v2.util.FatalAdapter;
 
 import java.awt.*;
 
-public abstract class Car implements Movable {
+public abstract class Car extends Movable implements Turnable {
 
     final private int nrDoors;
     double enginePower;
-    private double currentSpeed;
     private Color color;
     final private String modelName;
     private double x, y;
@@ -25,7 +24,7 @@ public abstract class Car implements Movable {
                String modelName) {
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
-        this.currentSpeed = currentSpeed;
+        super.setCurrentSpeed(currentSpeed);
         this.color = color;
         this.modelName = modelName;
     }
@@ -42,13 +41,6 @@ public abstract class Car implements Movable {
      */
     public double getEnginePower() {
         return enginePower;
-    }
-
-    /**
-     * @return returns the current speed
-     */
-    public double getCurrentSpeed() {
-        return currentSpeed;
     }
 
     /**
@@ -69,39 +61,40 @@ public abstract class Car implements Movable {
      * Starts the engine
      */
     public void startEngine() {
-        currentSpeed = 0.1;
+        super.setCurrentSpeed(0.1);
     }
 
     /**
      * Stops the engine
      */
     public void stopEngine() {
-        currentSpeed = 0;
+        super.setCurrentSpeed(0);
     }
 
     /**
      * Moves the car
      */
     public void move(double y) {
-        this.y += currentSpeed * speedFactor() +     y;
+        this.y += getCurrentSpeed() * speedFactor() + y;
     }
 
     /**
      * Turns right
      */
-    public void turnRight () {
-        x += currentSpeed + speedFactor();
+    public void turnRight() {
+        x += getCurrentSpeed() + speedFactor();
     }
 
     /**
      * Turns left
      */
     public void turnLeft() {
-        x -= currentSpeed + speedFactor();
+        x -= getCurrentSpeed() + speedFactor();
     }
 
     /**
      * Gets x
+     *
      * @return returns x
      */
     public double getX() {
@@ -110,25 +103,12 @@ public abstract class Car implements Movable {
 
     /**
      * Gets y
+     *
      * @return returns y
      */
     public double getY() {
         return y;
     }
-
-    /**
-     * Increases speed of the car (abstract)
-     *
-     * @param amount specifies the value of the speed increase
-     */
-    public abstract void incrementSpeed(double amount);
-
-    /**
-     * Decreases speed of the car (abstract)
-     *
-     * @param amount specifies the value of the speed decrease
-     */
-    public abstract void decrementSpeed(double amount);
 
     /**
      * Speed Factor (abstract)
@@ -159,8 +139,21 @@ public abstract class Car implements Movable {
             decrementSpeed(amount);
     }
 
-    public void setCurrentSpeed(double amount) {
-        if (amount >= 0 && amount <= enginePower)
-            currentSpeed = amount;
+    /**
+     * Increases the speed of the car
+     *
+     * @param amount specifies the value of the speed increase
+     */
+    private void incrementSpeed(double amount) {
+        super.setCurrentSpeed(Math.min(getCurrentSpeed() + speedFactor() * amount, enginePower));
+    }
+
+    /**
+     * Decreases the speed of the car
+     *
+     * @param amount specifies the value of the speed decrease
+     */
+    private void decrementSpeed(double amount) {
+        super.setCurrentSpeed(Math.max(getCurrentSpeed() - speedFactor() * amount, 0));
     }
 }

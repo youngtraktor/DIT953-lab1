@@ -35,22 +35,4 @@ public class Saab95 extends Car {
         if (turboOn) turbo = 1.3;
         return enginePower * 0.01 * turbo;
     }
-
-    /**
-     * Increases the speed of the car
-     *
-     * @param amount specifies the value of the speed increase
-     */
-    public void incrementSpeed(double amount) {
-        setCurrentSpeed(getCurrentSpeed() + speedFactor() * amount);
-    }
-
-    /**
-     * Decreases the speed of the car
-     *
-     * @param amount specifies the value of the speed decrease
-     */
-    public void decrementSpeed(double amount) {
-        setCurrentSpeed(getCurrentSpeed() - speedFactor() * amount);
-    }
 }

@@ -1,16 +1,16 @@
-public interface Movable {
-    /**
-     * Move
-     */
-    void move(double y);
+public class Movable {
+
+    private double currentSpeed;
+
 
     /**
-     * Turn left
+     * @return returns the current speed
      */
-    void turnLeft();
+    public double getCurrentSpeed() {
+        return currentSpeed;
+    }
 
-    /**
-     * Turn right
-     */
-    void turnRight();
+    public void setCurrentSpeed(double speed) {
+        currentSpeed = speed;
+    }
 }
