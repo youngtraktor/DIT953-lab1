@@ -96,6 +96,7 @@ public class testClass {
         scania.getWagon().tiltWagon(50);
         assertEquals(scania.getWagon().getWagonAngle(), 0.0, 0);
     }
+
     @Test
     public void testWrongWagonAngle() {
         scania.getWagon().tiltWagon(90);
